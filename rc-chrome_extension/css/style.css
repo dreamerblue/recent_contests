@@ -1,0 +1,36 @@
+/*Copyright 2016 (c) bLue*/
+/*Github: dreamerblue*/
+
+body {
+	font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+}
+.mgdiv {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+th, td {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+#loading {
+	margin: 12px 0;
+	text-align: center;
+}
+#loading p {
+	margin-bottom: 8px;
+}
+strong {
+	font-size: 116%;
+}
+#table, #footer {
+	display: none;
+}
+#footer p {
+	margin-bottom: 0px;
+}
+.container-fluid {
+	width: 720px;
+}
