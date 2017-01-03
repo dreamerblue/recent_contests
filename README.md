@@ -32,8 +32,8 @@ Chrome Extension:
 
 ## How To Use
 
-- Single HTML: Download rc-x.x.x.html, then deploy or open it.
+- Single HTML: Download rc.html, then deploy or open it.
 
-- Chrome Extension: Download rc-x.x.x.crx, open your Chrome's Extensions page and drag the crx file to it.
+- Chrome Extension: Download rc.crx, open your Chrome's Extensions page and drag the crx file to it.
 	
 	**Note**: You can also search the extension via Chrome Web Store.
