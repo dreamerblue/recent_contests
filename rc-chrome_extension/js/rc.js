@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 	$.ajax({
-		url: "http://contests.acmicpc.info/contests.json",
+		url: "https://contests.acmicpc.info/contests.json",
 		dataType: "json",
 		timeout: 5000,
 		cache: false,

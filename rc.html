@@ -9,10 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="refresh" content="600">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link rel="shortcut icon" href="favicon.ico"> -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
 <style>
 body {
 	font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
@@ -65,11 +66,12 @@ strong {
 			</div>
 		</div>
 		<div id="footer" class="mgdiv">
-			<p>Copyright &copy; 2016 <a href="http://helloblue.net" target="_blank">bLue</a></p>
-			<p>Version 1.0.1</p>
+			<p>Copyright &copy; 2016-2017 <a href="https://helloblue.net" target="_blank">bLue</a></p>
+			<p>Version 1.0.2</p>
+			<!-- <p><a href="download/rc.crx" target="_blank">Download Chrome Extension</a></p> -->
 			<p><a href="https://github.com/dreamerblue/recent_contests" target="_blank">GitHub</a></p>
-			<!-- <p><a href download="recent_contests.html">Download Source Code (HTML5 only)</a></p> -->
-			<p><a href="http://contests.acmicpc.info/contests.json" target="_blank">Data Source</a></p>
+			<!-- <p><a href download="bLue.recent_contests.html">Download Source Code (HTML5 only)</a></p> -->
+			<p><a href="https://contests.acmicpc.info/contests.json" target="_blank">Data Source</a></p>
 		</div>
 	</div>
 </div>
@@ -77,10 +79,10 @@ strong {
 $(document).ready(function() {
 	var timestamp = new Date().getTime();
 	$.ajax({
-		url: "http://query.yahooapis.com/v1/public/yql",
+		url: "https://query.yahooapis.com/v1/public/yql",
 		dataType: "jsonp",
 		data: {
-			q: 'select * from json where url="http://contests.acmicpc.info/contests.json?callback=' + timestamp + '"',
+			q: 'select * from json where url="https://contests.acmicpc.info/contests.json?callback=' + timestamp + '"',
 			format: "json",
 		timeout: 10000
 		},
