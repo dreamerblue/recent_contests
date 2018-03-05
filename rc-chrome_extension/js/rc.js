@@ -1,42 +1,41 @@
-// Copyright (c) 2016 bLue
-// Github: dreamerblue
-
-$(document).ready(function() {
+$(function () {
 	$.ajax({
 		url: "https://contests.acmicpc.info/contests.json",
 		dataType: "json",
-		timeout: 5000,
+		timeout: 10000,
 		cache: false,
-		success: function (res) {
-			$("#loading").animate({opacity: "hide"}, 0);
-			var tr = $('<tr></tr>');
-			tr.appendTo($("thead"));
-			$('<th>OJ</th>').appendTo(tr);
-			$('<th class="text-left">&nbsp;&nbsp;Name</th>').appendTo(tr);
-			$('<th>Start Time</th>').appendTo(tr);
-			// $('<th>Week</th>').appendTo(tr);
-			$('<th>Access</th>').appendTo(tr);
-			for(var i=0, len=res.length; i<len; ++i) {
-				var tr = $('<tr></tr>');
-				tr.appendTo($("tbody"));
-				$('<td>' + res[i].oj + '</td>').appendTo(tr);
-				$('<td class="text-left">&nbsp;&nbsp;<a href="' + res[i].link + '" target="_blank">' + res[i].name + '</a></td>').appendTo(tr);
-				$('<td>' + res[i].start_time + '</td>').appendTo(tr);
-				// $('<td>' + res[i].week + '</td>').appendTo(tr);
-				$('<td>' + res[i].access + '</td>').appendTo(tr);
-				var start_time = new Date(res[i].start_time.replace(/-/g,"/"));
-				var now_time = new Date();
-				var secs = (start_time-now_time)/1000;
-				if(secs <= 0)
-					tr.addClass("danger");
-				else if(Math.floor(secs/3600/24) < 3)
-					tr.addClass("info");
-			}
-			$("#table").animate({opacity: "show"}, 250);
-			$("#footer").animate({opacity: "show"}, 250);
+		success: function (json) {
+			json.forEach(function (contest) {
+				var tbody = $('#contests-table').find('tbody');
+				tbody.append('<tr></tr>');
+				var tr = tbody.find('tr:last');
+				tr.append('<td></td>');
+				tr.find('td:last').text(contest['oj']);
+				tr.append('<td class="text-left padding-md"><a target="_blank"></a></td>');
+				tr.find('td:last a').text(contest['name']);
+				tr.find('td:last a').attr('href', contest['link']);
+				tr.append('<td><span class="start_time"></span><sup class="tz"></sup></td>');
+				tr.find('td:last .start_time').text(contest['start_time']);
+				tr.find('td:last .tz').text('UTC+8');
+				tr.append('<td></td>');
+				tr.find('td:last').text(contest['week']);
+				var startTime = new Date(contest['start_time'].replace(/-/g, '/'));
+				var nowTime = new Date();
+				var secs = (startTime - nowTime) / 1000;
+				if(secs <= 0) {
+					tr.addClass('danger');
+				}
+				else if(Math.floor(secs / 3600 / 24) < 3) {
+					tr.addClass('info');
+				}
+			});
+			$('#loading').animate({opacity: 'hide'}, 0);
+			$('#contests-table').animate({opacity: 'show'}, 250);
+			$('#footer').animate({opacity: 'show'}, 250);
 		}, error: function () {
-			$("#loading").html('<p><strong>Failed to load data</strong></p><button id="refresh" type="button" class="btn btn-info">Reload</button>');
-			$("#refresh").click(function(){
+			$('#loading').html('<p>Failed to load data</p>' +
+				'<button id="refresh" type="button" class="btn btn-info">Reload</button>');
+			$('#refresh').click(function () {
 				window.location.reload();
 			});
 		}

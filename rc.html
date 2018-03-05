@@ -1,73 +1,96 @@
-<!-- Copyright (c) 2016 bLue -->
-<!-- Github: dreamerblue -->
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="refresh" content="600">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="favicon.ico">
-<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
-<style>
-body {
-	font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
-}
-.mgdiv {
-	text-align: center;
-	margin-top: 20px;
-	margin-bottom: 20px;
-}
-th, td {
-	text-align: center;
-}
-.text-left {
-	text-align: left;
-}
-#loading {
-	margin: 12px 0;
-	text-align: center;
-}
-#loading p {
-	margin-bottom: 8px;
-}
-strong {
-	font-size: 116%;
-}
-#table, #footer {
-	display: none;
-}
-#footer p {
-	margin-bottom: 0px;
-}
-</style>
-<title>Recent Contests</title>
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="refresh" content="600">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+	<style>
+		body {
+			font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+		}
+
+		.mgdiv {
+			text-align: center;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+
+		th, td {
+			text-align: center;
+		}
+
+		.table > tbody > tr > td.padding-md, .table > thead > tr > th.padding-md {
+			padding-left: 16px;
+			padding-right: 16px;
+		}
+
+		.tz {
+			margin-left: 4px;
+			color: #888;
+			font-size: 60%;
+			top: -.8em;
+		}
+
+		#loading {
+			margin: 20px 0;
+			font-size: 16px;
+			text-align: center;
+		}
+
+		#loading p {
+			margin-bottom: 8px;
+		}
+
+		strong {
+			font-size: 116%;
+		}
+
+		#footer p {
+			margin-bottom: 0;
+		}
+
+		.display-hidden {
+			display: none;
+		}
+	</style>
+	<title>Recent Contests</title>
 </head>
-<body id="main_body">
+<body>
 <div class="container">
-	<div class="row-fluid">
+	<div class="row">
 		<div class="mgdiv">
 			<h3>Recent Contests</h3>
 		</div>
-		<div class="span12">
-			<div class="table-responsive">
-				<div id="loading">
-					<p><strong>Loading...</strong></p><p>If no data loaded, refresh page please</p>
-				</div>
-				<table id="table" class="table table-striped table-bordered">
-					<thead></thead>
-					<tbody></tbody>
-				</table>
-			</div>
+
+		<div id="loading">
+			<p>Loading...</p>
+			<p>If no data loaded, refresh page please</p>
 		</div>
-		<div id="footer" class="mgdiv">
-			<p>Copyright &copy; 2016-2017 <a href="https://helloblue.net" target="_blank">bLue</a></p>
-			<p>Version 1.0.2</p>
+
+		<div>
+			<table id="contests-table" class="table table-striped table-bordered display-hidden">
+				<thead>
+				<tr>
+					<th>OJ</th>
+					<th class="text-left padding-md">Name</th>
+					<th>Start Time</th>
+					<th>Week</th>
+				</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<div id="footer" class="mgdiv display-hidden">
+			<p>Copyright &copy; 2016-2018 <a href="https://dreamer.blue" target="_blank">bLue</a></p>
+			<p>Version 1.0.3</p>
 			<!-- <p><a href="download/rc.crx" target="_blank">Download Chrome Extension</a></p> -->
 			<p><a href="https://github.com/dreamerblue/recent_contests" target="_blank">GitHub</a></p>
 			<!-- <p><a href download="bLue.recent_contests.html">Download Source Code (HTML5 only)</a></p> -->
@@ -76,49 +99,48 @@ strong {
 	</div>
 </div>
 <script>
-$(document).ready(function() {
-	var timestamp = new Date().getTime();
-	$.ajax({
-		url: "https://query.yahooapis.com/v1/public/yql",
-		dataType: "jsonp",
-		data: {
-			q: 'select * from json where url="https://contests.acmicpc.info/contests.json?callback=' + timestamp + '"',
-			format: "json",
-		timeout: 10000
-		},
-		success: function (res) {
-			$("#loading").animate({opacity: "hide"}, 0);
-			json = res.query.results.json.json;
-			var tr = $('<tr></tr>');
-			tr.appendTo($("thead"));
-			$('<th>OJ</th>').appendTo(tr);
-			$('<th class="text-left">&nbsp;&nbsp;Name</th>').appendTo(tr);
-			$('<th>Start Time</th>').appendTo(tr);
-			$('<th>Week</th>').appendTo(tr);
-			$('<th>Access</th>').appendTo(tr);
-			for(var i=0, len=json.length; i<len; ++i) {
-				var tr = $('<tr></tr>');
-				tr.appendTo($("tbody"));
-				$('<td>' + json[i].oj + '</td>').appendTo(tr);
-				$('<td class="text-left">&nbsp;&nbsp;<a href="' + json[i].link + '" target="_blank">' + json[i].name + '</a></td>').appendTo(tr);
-				$('<td>' + json[i].start_time + '</td>').appendTo(tr);
-				$('<td>' + json[i].week + '</td>').appendTo(tr);
-				$('<td>' + json[i].access + '</td>').appendTo(tr);
-				var start_time = new Date(json[i].start_time.replace(/-/g,"/"));
-				var now_time = new Date();
-				var secs = (start_time-now_time)/1000;
-				if(secs <= 0)
-					tr.addClass("danger");
-				else if(Math.floor(secs/3600/24) < 3)
-					tr.addClass("info");
+	$(function () {
+		var timestamp = new Date().getTime();
+		$.ajax({
+			url: 'https://query.yahooapis.com/v1/public/yql',
+			dataType: 'jsonp',
+			data: {
+				q: 'select * from json where url="https://contests.acmicpc.info/contests.json?callback=' + timestamp + '"',
+				format: 'json',
+				timeout: 10000
+			},
+			success: function (res) {
+				var json = res.query.results.json.json;
+				json.forEach(function (contest) {
+					var tbody = $('#contests-table').find('tbody');
+					tbody.append('<tr></tr>');
+					var tr = tbody.find('tr:last');
+					tr.append('<td></td>');
+					tr.find('td:last').text(contest['oj']);
+					tr.append('<td class="text-left padding-md"><a target="_blank"></a></td>');
+					tr.find('td:last a').text(contest['name']);
+					tr.find('td:last a').attr('href', contest['link']);
+					tr.append('<td><span class="start_time"></span><sup class="tz"></sup></td>');
+					tr.find('td:last .start_time').text(contest['start_time']);
+					tr.find('td:last .tz').text('UTC+8');
+					tr.append('<td></td>');
+					tr.find('td:last').text(contest['week']);
+					var startTime = new Date(contest['start_time'].replace(/-/g, '/'));
+					var nowTime = new Date();
+					var secs = (startTime - nowTime) / 1000;
+					if(secs <= 0) {
+						tr.addClass('danger');
+					}
+					else if(Math.floor(secs / 3600 / 24) < 3) {
+						tr.addClass('info');
+					}
+				});
+				$('#loading').animate({opacity: 'hide'}, 0);
+				$('#contests-table').animate({opacity: 'show'}, 250);
+				$('#footer').animate({opacity: 'show'}, 250);
 			}
-			$("#table").animate({opacity: "show"}, 250);
-			$("#footer").animate({opacity: "show"}, 250);
-		}, error: function () {
-			// alert("Error Occurred! Please contact author：tbdblue@gmail.com");
-		}
+		});
 	});
-});
 </script>
 </body>
 </html>

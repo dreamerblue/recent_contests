@@ -1,36 +1,52 @@
-/*Copyright 2016 (c) bLue*/
-/*Github: dreamerblue*/
-
 body {
-	font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", Arial, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
+
 .mgdiv {
 	text-align: center;
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
 th, td {
 	text-align: center;
 }
-.text-left {
-	text-align: left;
+
+.table > tbody > tr > td.padding-md, .table > thead > tr > th.padding-md {
+	padding-left: 16px;
+	padding-right: 16px;
 }
+
+.tz {
+	margin-left: 4px;
+	color: #888;
+	font-size: 60%;
+	top: -.8em;
+}
+
 #loading {
-	margin: 12px 0;
+	margin: 20px 0;
+	font-size: 16px;
 	text-align: center;
 }
+
 #loading p {
 	margin-bottom: 8px;
 }
+
 strong {
 	font-size: 116%;
 }
-#table, #footer {
+
+#footer p {
+	margin-bottom: 0;
+}
+
+.display-hidden {
 	display: none;
 }
-#footer p {
-	margin-bottom: 0px;
-}
+
 .container-fluid {
 	width: 720px;
+	margin: 0;
 }
