@@ -4,7 +4,7 @@
 
 Author: bLue
 
-Version: 1.0.3
+Version: 1.0.4
 
 ---
 
@@ -37,5 +37,4 @@ Chrome Extension:
 - Chrome Extension: Download rc.crx, open your Chrome's Extensions page and drag the crx file to it.
 	
 	**Note**: You can also download the extension via [Chrome Web Store](https://chrome.google.com/webstore/detail/recent-contests/dpkemmodbnjpckjkoflpgobjloenlmob).
-
 
