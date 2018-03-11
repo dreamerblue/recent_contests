@@ -4,7 +4,6 @@
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="refresh" content="600">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -35,7 +34,7 @@
 			margin-left: 4px;
 			color: #888;
 			font-size: 60%;
-			top: -.8em;
+			top: -.7em;
 		}
 
 		#loading {
@@ -89,7 +88,7 @@
 
 	<div id="footer" class="mgdiv display-hidden">
 		<p>Copyright &copy; 2016-2018 <a href="https://dreamer.blue" target="_blank">bLue</a></p>
-		<p>Version 1.0.3</p>
+		<p>Version 1.0.4</p>
 		<!-- <p><a href="download/rc.crx" target="_blank">Download Chrome Extension</a></p> -->
 		<p><a href="https://github.com/dreamerblue/recent_contests" target="_blank">GitHub</a></p>
 		<!-- <p><a href download="bLue.recent_contests.html">Download Source Code (HTML5 only)</a></p> -->
@@ -97,6 +96,31 @@
 	</div>
 </div>
 <script>
+	function preZeroFill(num, size) {
+		if (num >= Math.pow(10, size)) {
+			return num.toString();
+		}
+		else {
+			var str = Array(size + 1).join('0') + num;
+			return str.slice(str.length - size);
+		}
+	}
+
+	function formatTimeStr(t) {
+		return t.getFullYear() + '-' + preZeroFill(t.getMonth()+1, 2) + '-' + preZeroFill(t.getDate(), 2) +
+			' ' + preZeroFill(t.getHours(), 2) + ':' + preZeroFill(t.getMinutes(), 2) + ':' + preZeroFill(t.getSeconds(), 2);
+	}
+
+	function formatTimeTZ(str, timezone) {
+		var t = new Date(str + timezone);
+		var tz = parseInt(new Date().getTimezoneOffset()/-60);
+		if(tz >= 0) tz = '+' + tz;
+		return {
+			time: formatTimeStr(t),
+			tz: tz,
+		}
+	}
+
 	$(function () {
 		var timestamp = new Date().getTime();
 		$.ajax({
@@ -118,9 +142,10 @@
 					tr.append('<td class="text-left padding-md"><a target="_blank"></a></td>');
 					tr.find('td:last a').text(contest['name']);
 					tr.find('td:last a').attr('href', contest['link']);
+					var starTime = formatTimeTZ(contest['start_time'], '+8');
 					tr.append('<td><span class="start_time"></span><sup class="tz"></sup></td>');
-					tr.find('td:last .start_time').text(contest['start_time']);
-					tr.find('td:last .tz').text('UTC+8');
+					tr.find('td:last .start_time').text(starTime['time']);
+					tr.find('td:last .tz').text('UTC' + starTime['tz']);
 					tr.append('<td></td>');
 					tr.find('td:last').text(contest['week']);
 					var startTime = new Date(contest['start_time'].replace(/-/g, '/'));

@@ -3,7 +3,7 @@
 
 	"name": "Recent Contests",
 	"description": "Recent Contests from frequently used OJs",
-	"version": "1.0.3",
+	"version": "1.0.4",
 
 	"browser_action": {
 		"default_icon": {
