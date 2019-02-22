@@ -3,11 +3,10 @@
   "description": "Recent Contests from frequently used OJs",
   "version": "1.0.5",
   "scripts": {
-    "build": "webpack --mode production",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "tslint -p ./tsconfig.json",
     "dev": "webpack --mode development --watch",
-    "lint:fix": "tslint -p ./tsconfig.json --fix"
+    "build": "webpack --mode production",
+    "lint": "tslint -p ./tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "ant-design-vue": "^1.3.4",
