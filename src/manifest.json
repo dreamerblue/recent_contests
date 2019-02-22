@@ -20,7 +20,7 @@
 		"128": "images/icon_128.png"
 	},
 	"permissions": [
-		"http://contests.sdutacm.cn",
+		"http://contests.sdutacm.cn/",
 		"storage"
 	]
 }
