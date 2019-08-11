@@ -4,7 +4,7 @@
 
 Author: bLue
 
-Version: 1.0.5
+Version: 1.0.6
 
 ---
 
