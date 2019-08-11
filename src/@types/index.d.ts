@@ -1,16 +1,16 @@
-declare interface IPlatformUpdateStatus {
+interface IPlatformUpdateStatus {
   source: string;
   updated_at: string;
 }
 
-declare interface IApiResponseStatus {
+interface IApiResponseStatus {
   GitHub: string;
   message: string;
   contests_link: string;
   updated_at: IPlatformUpdateStatus[];
 }
 
-declare interface IContest {
+interface IContest {
   hash: string;
   id?: string | number;
   source: string;
@@ -26,4 +26,4 @@ declare interface IContest {
   register_end_time?: string;
 }
 
-declare type ApiResponseContests = IContest[];
+type ApiResponseContests = IContest[];

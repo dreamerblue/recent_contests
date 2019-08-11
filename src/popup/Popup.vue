@@ -1,36 +1,59 @@
 <template>
   <div class="container">
     <div style="min-height: 108px;">
-      <a-table :dataSource="contests"
-               rowKey="hash"
-               :loading="loading"
-               :pagination="false"
-               @change="handleTableChange"
+      <a-table
+        :dataSource="contests"
+        rowKey="hash"
+        :loading="loading"
+        :pagination="false"
+        @change="handleTableChange"
       >
-        <a-table-column title="Platform"
-                        dataIndex="source"
-                        key="source"
-                        :width="140"
-                        :filters="availableFilters"
-                        :filteredValue="filtered"
+        <a-table-column
+          title="Platform"
+          dataIndex="source"
+          key="source"
+          :width="140"
+          :filters="availableFilters"
+          :filteredValue="filtered"
         />
-        <a-table-column title="Name"
-                        dataIndex="name"
-                        key="name"
+
+        <a-table-column
+          title="Name"
+          dataIndex="name"
+          key="name"
         >
           <template slot-scope="text, record">
             <span>
-              <a :href="record.link" target="_blank">{{record.name}}</a>
+              <a v-if="isComingSoon(record)" :href="record.link" target="_blank">
+                {{record.name}} <a-tag color="blue">{{getStartTimeToNow(record)}}</a-tag>
+              </a>
+              <a v-else-if="getTimeStatus(record) === 'Running'" :href="record.link" target="_blank">
+                {{record.name}} <a-icon type="clock-circle" />
+              </a>
+              <a v-else :href="record.link" target="_blank">{{record.name}}</a>
             </span>
           </template>
         </a-table-column>
-        <a-table-column title="Start"
-                        dataIndex="start_time"
-                        key="start_time"
-                        :width="160"
+
+        <a-table-column
+          title="Start"
+          dataIndex="start_time"
+          key="start_time"
+          :width="160"
         >
           <template slot-scope="start_time">
             <span>{{formatTime(start_time)}}</span>
+          </template>
+        </a-table-column>
+
+        <a-table-column
+          title="End"
+          dataIndex="end_time"
+          key="end_time"
+          :width="160"
+        >
+          <template slot-scope="end_time">
+            <span>{{formatTime(end_time)}}</span>
           </template>
         </a-table-column>
       </a-table>
@@ -107,8 +130,8 @@
         this.loading = true;
         try {
           const contestsData: ApiResponseContests = await get(api.contests, { include: this.filtered });
-          this.contests = contestsData;
           console.log('[fetch] contests:', contestsData);
+          this.contests = contestsData.filter(c => moment().subtract(3, 'd').isBefore(c.start_time));
         } catch (err) {
           console.error(err);
           this.$message.error(err.toString());
@@ -137,13 +160,27 @@
       formatTime(time: string): string {
         return moment(time).format('YYYY-MM-DD HH:mm');
       },
+      getTimeStatus(contest: IContest) {
+        if (moment().isBefore(contest.start_time)) {
+          return 'Pending';
+        } else if (moment().isBefore(contest.end_time)) {
+          return 'Running';
+        }
+        return 'Ended';
+      },
+      isComingSoon(contest: IContest) {
+        return this.getTimeStatus(contest) === 'Pending' && moment().add(3, 'd').isAfter(contest.start_time);
+      },
+      getStartTimeToNow(contest: IContest) {
+        return moment(contest.start_time).toNow(true);
+      },
     },
   });
 </script>
 
 <style lang="less" scoped>
   .container {
-    width: 720px;
+    width: 800px;
   }
 
   .text-center {
