@@ -1,5 +1,5 @@
 export default {
-  base: 'http://contests.sdutacm.cn',
+  base: 'https://contests.sdutacm.cn',
   status: '/',
   contests: '/contests.json',
 };

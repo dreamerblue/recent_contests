@@ -66,7 +66,7 @@
     <div class="text-center" style="margin-top: 30px;">
       <p>
         <a href="https://github.com/dreamerblue/recent_contests" target="_blank">GitHub</a> |
-        <a href="http://contests.sdutacm.cn/" target="_blank">Data Source</a>
+        <a href="https://contests.sdutacm.cn/" target="_blank">Data Source</a>
       </p>
     </div>
   </div>
@@ -172,7 +172,7 @@
         return this.getTimeStatus(contest) === 'Pending' && moment().add(3, 'd').isAfter(contest.start_time);
       },
       getStartTimeToNow(contest: IContest) {
-        return moment(contest.start_time).toNow(true);
+        return moment(contest.start_time).fromNow();
       },
     },
   });

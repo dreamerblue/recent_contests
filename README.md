@@ -4,7 +4,7 @@
 
 Author: bLue
 
-Version: 1.0.6
+Version: 1.0.7
 
 ---
 
@@ -12,7 +12,7 @@ A Chrome Extension which displays recent contests from frequently used OJs.
 
 It may be helpful for OIers, ACMers and other funs of algorithm.
 
-Data source powered by <http://contests.sdutacm.cn/> ([GitHub](https://github.com/MeiK-h/recent_contests)).
+Data source powered by <https://contests.sdutacm.cn/> ([GitHub](https://github.com/MeiK-h/recent_contests)).
 
 ## Screenshot
 

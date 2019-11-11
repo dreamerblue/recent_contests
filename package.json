@@ -1,7 +1,7 @@
 {
   "name": "recent_contests",
   "description": "Recent Contests from frequently used OJs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production",
